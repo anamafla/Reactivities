@@ -1,29 +1,15 @@
 //What's going on inside this class. When we use this web application CreateBuilder, it's going to do a bunch of things, but it's going to create something called a Kestrel server. 
 //And it's also going to read from our configuration files, any configuration that we pass to it(appsettings.Development.json/ appsettings.json)
+using API.Extensions;
+using Application.Activities;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//Think of services as just things we can use inside our code, and we'll be looking at dependency injection to inject theses services into other classes inside our application
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-  opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddCors(opt => {
-    opt.AddPolicy("CorsPolicy", policy =>
-      {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-      });
-});
-
-
+builder.Services.AddApplicationServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
