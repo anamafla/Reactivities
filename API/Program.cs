@@ -1,6 +1,7 @@
 //What's going on inside this class. When we use this web application CreateBuilder, it's going to do a bunch of things, but it's going to create something called a Kestrel server. 
 //And it's also going to read from our configuration files, any configuration that we pass to it(appsettings.Development.json/ appsettings.json)
 using API.Extensions;
+using API.Middleware;
 using Application.Activities;
 using Application.Core;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 // This is often referred to as middleware. And think of middleware for the time being as things that can do something with the HTTP request on
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
