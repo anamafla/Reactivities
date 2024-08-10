@@ -31,8 +31,8 @@ export default class UserStore {
         router.navigate('/activities');
         store.modalStore.closeModal();
         console.log(user);
-}   
-
+    }
+    
     logout = () => {
         store.commonStore.setToken(null);
         this.user = null;
@@ -47,4 +47,14 @@ export default class UserStore {
 
         }
     }
+
+    setImage = (image: string) => {
+        if (this.user) this.user.image = image;
+    }
+
+    setUserPhoto = (url: string) => {
+        if (this.user) this.user.image = url;
+    }
+
+
 }
